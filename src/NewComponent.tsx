@@ -1,62 +1,45 @@
 import React from 'react'
-type NewComponentType = {
-    // students: Array<StudentType>
-    students: StudentType[]
+import {FilterButtonsType} from "./App";
+
+type FilteredMoneyType = {
+    filteredMoney: AllMoney[]
+    onClickFilterHandler: (buttonName: FilterButtonsType) => void
 }
 
-type StudentType = {
-    id: number
-    name: string
-    age: number
+type AllMoney = {
+    banknots: string
+    value: number
+    number: string
 }
 
-export const NewComponent = (props: NewComponentType) => {
+// type OnHandlerProps= {
+//     onClick: (event:React.MouseEvent<HTMLButtonElement>)=> void
+// }
+
+export const NewComponent = (props: FilteredMoneyType) => {
     return (
-        <ul>
-            {props.students.map(s => <li key = {s.id}>
-
-                    <span>{s.name} - </span>
-                    <span> age:{s.age} </span>
-                </li>
-            )}
-        </ul>
+        <>
+            <ul>
+                {props.filteredMoney.map((el, i) => {
+                        return (
+                            <li key = {i}>
+                                <span> {el.banknots}</span>
+                                <span> {el.value}</span>
+                                <span> {el.number}</span>
+                            </li>)
+                    }
+                )}
+            </ul>
+            <div style = {{marginLeft: 30}}>
+                <button onClick = {() => props.onClickFilterHandler('All')}>All</button>
+                <button onClick = {() => props.onClickFilterHandler('Rouble')}>Rouble</button>
+                <button onClick = {() => props.onClickFilterHandler('Dollar')}>Dollar</button>
+            </div>
+        </>
     );
 };
 
 
-type CarsType = {
-    topCars: TopCarsType[]
-}
 
-type TopCarsType = {
-    manufacturer: string
-    model: string
-    year: number
 
-}
 
-export const TopCars = (props: CarsType) => {
-
-    return (
-        <table>
-            <thead>
-            <tr>
-                <th>Manufacturer</th>
-                <th>Model</th>
-                <th>Year</th>
-            </tr>
-            </thead>
-            <tbody>
-            {props.topCars.map((el, i) => {
-                return (
-                    <tr key = {i}>
-                        <td>{el.manufacturer}</td>
-                        <td>{el.model}</td>
-                        <td>{el.year}</td>
-                    </tr>
-                )
-            })}
-            </tbody>
-        </table>
-    )
-}
